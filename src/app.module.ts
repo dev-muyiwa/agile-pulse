@@ -9,7 +9,10 @@ import configuration from '../config/configuration';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [configuration],
+    }),
     SequelizeModule.forRoot({
       dialect: configuration().database.dialect,
       host: configuration().database.host,

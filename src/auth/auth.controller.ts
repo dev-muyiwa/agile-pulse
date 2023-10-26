@@ -1,6 +1,6 @@
 import { Controller, Post, Body, HttpCode } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { RegisterUserDto } from './dto/register-user.dto';
+import { LoginUserDto, RegisterUserDto } from './dto/auth.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -8,7 +8,11 @@ export class AuthController {
 
   @Post('register')
   @HttpCode(201)
-  async register(@Body() registerUser: RegisterUserDto) {}
+  async register(@Body() registerDto: RegisterUserDto) {}
+
+  @Post('login')
+  @HttpCode(200)
+  async login(@Body() loginDto: LoginUserDto) {}
 
   // @Delete(':id')
   // remove(@Param('id') id: string) {

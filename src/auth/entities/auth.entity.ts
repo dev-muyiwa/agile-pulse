@@ -2,6 +2,7 @@ import {
   BelongsTo,
   Column,
   DataType,
+  Default,
   ForeignKey,
   Model,
   PrimaryKey,
@@ -30,6 +31,13 @@ export class Auth extends Model {
     allowNull: false,
   })
   salt!: string;
+
+  @Default(null)
+  @Column({
+    type: DataType.STRING(120),
+    allowNull: true,
+  })
+  token: string;
 
   @BelongsTo(() => User, 'userId')
   user: User;

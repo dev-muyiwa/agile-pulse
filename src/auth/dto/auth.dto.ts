@@ -5,6 +5,7 @@ import {
   Matches,
   MinLength,
 } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
 
 export class RegisterUserDto {
   @IsString({
@@ -32,3 +33,5 @@ export class RegisterUserDto {
   })
   readonly password: string;
 }
+
+export class LoginUserDto extends PartialType(RegisterUserDto) {}
