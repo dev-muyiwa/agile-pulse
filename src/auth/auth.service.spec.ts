@@ -9,6 +9,7 @@ describe('AuthService', () => {
       providers: [AuthService],
     }).compile();
 
+    // TODO('Database model needs to be injected in the auth service to work.')
     service = module.get<AuthService>(AuthService);
   });
 

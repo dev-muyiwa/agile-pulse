@@ -21,6 +21,12 @@ export class Auth extends Model {
   userId!: string;
 
   @Column({
+    type: DataType.STRING(20),
+    allowNull: false,
+  })
+  email!: string;
+
+  @Column({
     type: DataType.STRING,
     allowNull: false,
   })

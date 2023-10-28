@@ -1,19 +1,43 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { RegisterUserDto } from '../auth/dto/auth.dto';
+import { User } from './entities/user.entity';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(@InjectModel(User) private userModel: typeof User) {}
+
+  async create(userDto: RegisterUserDto) {
+    return await this.userModel.create({
+      firstName: userDto.firstName,
+      lastName: userDto.lastName,
+      email: userDto.email,
+    });
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findOne(id: string) {
+    const user: User | null = await this.userModel.findByPk(id);
+    if (!user) {
+      throw new NotFoundException('User does not exist');
+    }
+
+    return user;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOneBy(email: string) {
+    const user: User | null = await this.userModel.findOne({
+      where: { email: email },
+    });
+    if (!user) {
+      throw new NotFoundException('User does not exist');
+    }
+
+    return user;
+  }
+
+  async findAll() {
+    return await User.findAll();
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
