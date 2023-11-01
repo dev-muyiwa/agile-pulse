@@ -39,5 +39,14 @@ export class AuthService {
     return passwordDto;
   }
 
+  async create(userId: string, passwordDto: PasswordDto, token: string) {
+    return this.authModel.create({
+      userId: userId,
+      hash: passwordDto.hash,
+      salt: passwordDto.salt,
+      token: token,
+    });
+  }
+
   // Generate token
 }

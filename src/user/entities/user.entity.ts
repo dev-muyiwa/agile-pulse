@@ -34,7 +34,7 @@ export class User extends Model {
 
   @Unique
   @Column({
-    type: DataType.STRING(20),
+    type: DataType.STRING(40),
     allowNull: false,
   })
   email!: string;
@@ -46,6 +46,9 @@ export class User extends Model {
   })
   hasVerified: boolean;
 
-  @HasOne(() => Auth)
+  @HasOne(() => Auth, {
+    onDelete: 'CASCADE',
+    foreignKey: 'userId',
+  })
   auth: Auth;
 }

@@ -3,17 +3,15 @@ import {
   Column,
   DataType,
   Default,
-  ForeignKey,
   Model,
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
 import { User } from '../../user/entities/user.entity';
 
-@Table({ tableName: 'authentication', updatedAt: false })
+@Table({ tableName: 'auth', updatedAt: false })
 export class Auth extends Model {
   @PrimaryKey
-  @ForeignKey(() => User)
   @Column({
     type: DataType.UUID,
     allowNull: false,
@@ -21,7 +19,7 @@ export class Auth extends Model {
   userId!: string;
 
   @Column({
-    type: DataType.STRING(20),
+    type: DataType.STRING(40),
     allowNull: false,
   })
   email!: string;
@@ -33,7 +31,7 @@ export class Auth extends Model {
   hash!: string;
 
   @Column({
-    type: DataType.STRING(10),
+    type: DataType.STRING(32),
     allowNull: false,
   })
   salt!: string;
@@ -45,6 +43,9 @@ export class Auth extends Model {
   })
   token: string;
 
-  @BelongsTo(() => User, 'userId')
+  @BelongsTo(() => User, {
+    onDelete: 'CASCADE',
+    foreignKey: 'userId',
+  })
   user: User;
 }
